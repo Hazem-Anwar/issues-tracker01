@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main className="s">hello world</main>;
+  return <main className="container mx-auto">hello world</main>;
 }
