@@ -19,7 +19,7 @@ const Navbar = () => {
             <IconBug color="#000" size={38} />
           </Link>
 
-          <div className="space-x-6">
+          <div className="space-x-5">
             <ul className="flex items-center">
               {Links.map((link) => (
                 <li key={link.label}>
