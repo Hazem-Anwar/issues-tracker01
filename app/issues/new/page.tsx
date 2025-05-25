@@ -7,21 +7,30 @@ import React from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { setErrorMap } from "zod";
-interface IssueForm {
-  title: string;
-  description: string;
-}
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createIssueSchema } from "@/app/validationSchemas";
+import { z } from "zod";
+import { IconFaceIdError } from "@tabler/icons-react";
+import Spinner from "@/app/components/Spinner";
+
+type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
   const router = useRouter();
-  const { register, control, handleSubmit } = useForm<IssueForm>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+  });
   const [error, setError] = useState("");
+  const [isSubmiting, setIsSubmiting] = useState(false);
   return (
-    <div className="max-w-xl mx-auto" >
+    <div className="max-w-xl mx-auto">
       {error && (
         <Callout.Root className="mb-3" color="red">
-          
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
@@ -29,15 +38,24 @@ const NewIssuePage = () => {
         className=""
         onSubmit={handleSubmit(async (data) => {
           try {
+            setIsSubmiting(true);
             await axios.post("/api/issues", data);
             router.push("/issues");
           } catch (error) {
+            setIsSubmiting(false);
             setError("an unexpected error.");
           }
         })}
       >
         <div className=" mx-auto border-1 p-5 bg-stone-50 border-stone-400 rounded-md">
           <TextField.Root placeholder="Title" {...register("title")} />
+          {errors.title && (
+            <p className="text-red-700 py-2 text-xs flex items-center">
+              <IconFaceIdError className="me-2" width={16} stroke={2} />
+
+              {errors.title.message}
+            </p>
+          )}
           <Controller
             name="description"
             control={control}
@@ -49,8 +67,13 @@ const NewIssuePage = () => {
               />
             )}
           />
+          {errors.description && (
+            <p className="text-red-700 p-2">{errors.description.message}</p>
+          )}
 
-          <Button>Submit New Isuue</Button>
+          <Button disabled={isSubmiting}>
+            Submit New Isuue {isSubmiting && <Spinner />}
+          </Button>
         </div>
       </form>
     </div>
