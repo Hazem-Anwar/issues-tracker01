@@ -71,9 +71,7 @@ const NewIssuePage = () => {
             <p className="text-red-700 p-2">{errors.description.message}</p>
           )}
 
-          <Button disabled={isSubmiting}>
-            Submit New Isuue {isSubmiting && <Spinner />}
-          </Button>
+          <Button>Submit New Isuue {isSubmiting && <Spinner />}</Button>
         </div>
       </form>
     </div>
