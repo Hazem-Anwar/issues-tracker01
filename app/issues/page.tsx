@@ -5,7 +5,6 @@ import Link from "next/link";
 import IssueTable from "./issueTable";
 import TableSkeleton from "./TableSkeleton";
 
-
 const IssuesPage = () => {
   return (
     <div className="container mx-auto">

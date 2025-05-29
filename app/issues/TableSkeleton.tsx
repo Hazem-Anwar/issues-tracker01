@@ -6,9 +6,15 @@ const TableSkeleton = () => {
     <Table.Root className="w-full border border-[#e3dfe6] rounded-md mt-4 animate-pulse">
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell className="p-2 text-left">Title</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="p-2 text-left">Status</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="p-2 text-left">Date</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell className="p-2 text-left">
+            Title
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell className="p-2 text-left">
+            Status
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell className="p-2 text-left">
+            Date
+          </Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
