@@ -8,13 +8,13 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "@/app/validationSchemas";
+import { IssueSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 import { IconFaceIdError } from "@tabler/icons-react";
 import Spinner from "@/app/components/Spinner";
 import { Issue } from "@prisma/client";
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof IssueSchema>;
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   const router = useRouter();
@@ -24,7 +24,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(IssueSchema),
   });
   const [error, setError] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
@@ -40,7 +40,8 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
         onSubmit={handleSubmit(async (data) => {
           try {
             setIsSubmiting(true);
-            await axios.post("/api/issues", data);
+            if (issue) await axios.patch("/api/issues/ " + issue.id, data);
+            else await axios.post("/api/issues", data);
             router.push("/issues");
           } catch (error) {
             setIsSubmiting(false);
@@ -77,7 +78,10 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
             <p className="text-red-700 p-2">{errors.description.message}</p>
           )}
 
-          <Button>Submit New Isuue {isSubmiting && <Spinner />}</Button>
+          <Button>
+            {issue ? "Update Issue" : "Submit New Issue"}
+            {isSubmiting && <Spinner />}
+          </Button>
         </div>
       </form>
     </div>
