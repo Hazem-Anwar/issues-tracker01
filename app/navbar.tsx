@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { IconBug } from "@tabler/icons-react";
 import classnames from "classnames";
+import UserData from "./components/userData";
 const Navbar = () => {
   const currentPage = usePathname();
   console.log(currentPage);
@@ -22,7 +24,7 @@ const Navbar = () => {
           <div className="space-x-5">
             <ul className="flex items-center">
               {Links.map((link) => (
-                <li key={link.label}>
+                <li key={link.href}>
                   <Link
                     href={link.href}
                     className={classnames({
@@ -38,6 +40,8 @@ const Navbar = () => {
               ))}
             </ul>
           </div>
+              
+          <UserData />
         </div>
       </nav>
     </div>
