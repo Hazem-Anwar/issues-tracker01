@@ -4866,7 +4866,7 @@ class RepoFilter(object):
         self._tweak_commit(obj, aux_info)
       elif type(obj) == Reset:
         self._tweak_reset(obj)
-      elif type(obj) == Tag:
+      elif type(obj) == Tag: 
         self._tweak_tag(obj)
     self._insert_into_stream(obj)
 
