@@ -35,3 +35,5 @@ yarn-error.log*
 next-env.d.ts
 # Ignore environment variables
 .env
+# Sentry Config File
+.env.sentry-build-plugin
