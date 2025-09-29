@@ -10,14 +10,16 @@ import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "./AssigneeSelect";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>; // ✅ تغيير هنا
 }
 
 const IssueDetailsPage = async ({ params }: Props) => {
+  const { id } = await params; // ✅ إضافة await
+
   //   if (typeof params.id !== "number") notFound();
   const session = await getServerSession(authOptions);
   const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(id) },
   });
 
   if (!issue) notFound();
@@ -27,7 +29,7 @@ const IssueDetailsPage = async ({ params }: Props) => {
         <SingleIssueDetails issue={issue}></SingleIssueDetails>
         {session && (
           <div className="p-3 border-b border-[#ccc] prose flex items-center gap-3">
-            <AssigneeSelect  />
+            <AssigneeSelect />
             <EditIssueButton issueId={issue.id} />
             <DeleteIssueButton issueId={issue.id} />
           </div>

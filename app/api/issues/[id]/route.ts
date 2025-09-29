@@ -5,9 +5,11 @@ import delay from "delay";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: Request, context: { params: { id: string } }) {
-  const { params } = context;
-
+export async function PATCH(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> } // تغيير هنا
+) {
+  const params = await context.params; // إضافة await هنا
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({}, { status: 401 });
 
@@ -26,7 +28,7 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
   }
 
   const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(params.id) }, // استخدام params بعد await
   });
   if (!issue)
     return NextResponse.json({ error: "Invalid issue" }, { status: 404 });
@@ -39,17 +41,17 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
 }
 
 export async function DELETE(
-  req: Request,
-  context: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> } // تغيير هنا
 ) {
-  const { params } = context;
+  const params = await context.params; // إضافة await هنا
 
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({}, { status: 401 });
 
   await delay(2000);
   const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(params.id) }, // استخدام params بعد await
   });
   if (!issue)
     return NextResponse.json({ error: "invalid issue" }, { status: 404 });

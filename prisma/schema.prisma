@@ -20,6 +20,8 @@ model Issue {
   updatedAt        DateTime @updatedAt
   assignedToUserId String?  @db.VarChar(255)
   assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
+
+  @@index([assignedToUserId])
 }
 
 enum Status {
@@ -72,7 +74,7 @@ model User {
 }
 
 model VerificationToken {
-  id String @id @default(cuid()) // أضفنا Primary Key
+  id         String   @id @default(cuid()) // أضفنا Primary Key
   identifier String
   token      String
   expires    DateTime

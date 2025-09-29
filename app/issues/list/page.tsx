@@ -16,20 +16,22 @@ export const metadata: Metadata = {
 
 interface Props {
   // page: string to pagination table
-  searchParams: issueQuery;
+  searchParams: Promise<issueQuery>;
 }
 const IssuesPage = async ({ searchParams }: Props) => {
+  const resolvedSearchParams = await searchParams; // ✅ إضافة await هنا
+
   ////not working
   const statuses = Object.values(Status);
-  const status = statuses.includes(searchParams.status)
-    ? searchParams.status
+  const status = statuses.includes(resolvedSearchParams.status)
+    ? resolvedSearchParams.status
     : undefined;
 
-  const orderBy = columnsName.includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "desc" }
+  const orderBy = columnsName.includes(resolvedSearchParams.orderBy)
+    ? { [resolvedSearchParams.orderBy]: "desc" }
     : undefined;
   //pagination table
-  const page = parseInt(searchParams.page) || 1;
+  const page = parseInt(resolvedSearchParams.page) || 1;
   const pageSize = 8;
 
   const issues = await prisma.issue.findMany({
@@ -59,7 +61,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
         </div>
 
         <Suspense fallback={<TableSkeleton />}>
-          <IssueTable searchParams={searchParams} issues={issues} />
+          <IssueTable searchParams={resolvedSearchParams} issues={issues} />
         </Suspense>
         <Pagination
           pageSize={pageSize}

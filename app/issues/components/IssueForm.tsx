@@ -1,5 +1,5 @@
 "use client";
-import { TextField, Button, Callout } from "@radix-ui/themes";
+import { TextField, Button, Callout, TextArea } from "@radix-ui/themes";
 import SimpleMdeReact from "react-simplemde-editor";
 import { useForm, Controller } from "react-hook-form";
 import "easymde/dist/easymde.min.css";
@@ -62,7 +62,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
               {errors.title.message}
             </p>
           )}
-          <Controller
+          {/* <Controller
             name="description"
             defaultValue={issue?.description}
             control={control}
@@ -72,6 +72,25 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
                 className="my-4"
                 {...field}
               />
+            )}
+          /> */}
+
+          <Controller
+            name="description"
+            defaultValue={issue?.description}
+            control={control}
+            render={({ field }) => (
+              <TextArea
+                placeholder="Description"
+                className="my-4 min-h-24"
+                {...field}
+              />
+              // أو استخدم textarea عادي
+              // <textarea
+              //   placeholder="Description"
+              //   className="my-4 w-full min-h-24 p-2 border rounded"
+              //   {...field}
+              // />
             )}
           />
           {errors.description && (
