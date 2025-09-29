@@ -72,6 +72,7 @@ model User {
 }
 
 model VerificationToken {
+  id String @id @default(cuid()) // أضفنا Primary Key
   identifier String
   token      String
   expires    DateTime
