@@ -22,7 +22,10 @@ const IssuesSummary = ({ open, inProgress, closed }: Props) => {
     <div>
       <div className="grid items-center mb-5 gap-4">
         {Containers.map((container) => (
-          <Link href={`/issues/list?status=${container.status}`}>
+          <Link
+            key={container.status} // ✅ أضفنا الـ key هنا
+            href={`/issues/list?status=${container.status}`}
+          >
             <div className="card py-3 px-4 border border-gray-300 rounded-xl">
               <h3>{container.label}</h3>
               <h1>{container.value}</h1>
