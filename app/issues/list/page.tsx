@@ -31,21 +31,19 @@ const IssuesPage = async ({ searchParams }: Props) => {
     ? { [resolvedSearchParams.orderBy]: "desc" }
     : undefined;
   //pagination table
-  const page = parseInt(resolvedSearchParams.page) || 1;
-  const pageSize = 8;
+  const page = Number(resolvedSearchParams.page) || 1;
+  const pageSize = 4;
 
   const issues = await prisma.issue.findMany({
-    where: {
-      status,
-    },
-    orderBy,
-    //pagination table
+    where: { status },
+    orderBy: { id: "desc" }, // تأكد ثابت
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
-  //pagination table
-  const issueNumber = await prisma.issue.count();
-  await delay(1000);
+
+  const issueNumber = await prisma.issue.count({ where: { status } });
+
+  console.log("Page:", page, "Issues:", issues.length);
 
   return (
     <>

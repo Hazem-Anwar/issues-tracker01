@@ -11,7 +11,7 @@ const Navbar = () => {
   console.log(currentPage);
   const Links = [
     { label: "Dashboard", href: "/" },
-    { label: "Issues", href: "/issues" },
+    { label: "Issues", href: "/issues/list" },
   ];
   return (
     <div>
@@ -40,7 +40,7 @@ const Navbar = () => {
               ))}
             </ul>
           </div>
-              
+
           <UserData />
         </div>
       </nav>

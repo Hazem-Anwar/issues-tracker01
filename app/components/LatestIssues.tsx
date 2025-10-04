@@ -14,9 +14,7 @@ const LatestIssues = async () => {
   return (
     <>
       <div className="issuesContainer">
-        <h3 className="text-xl font-bold mb-4">
-          Just check the latest issues :{" "}
-        </h3>
+        <h3 className="text-xl font-bold mb-4">Just check the latest issues</h3>
         {issue.map((issue) => (
           <div
             key={issue.id}

@@ -4,6 +4,8 @@ import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import IssueTable from "./issueTable";
 import TableSkeleton from "./TableSkeleton";
+import IssuesSummary from "../components/IssuesSummary";
+import LatestIssues from "../components/LatestIssues";
 
 const IssuesPage = () => {
   return (
@@ -15,7 +17,9 @@ const IssuesPage = () => {
         New Isuue
       </Link>
       <Suspense fallback={<TableSkeleton />}>
-        <IssueTable />
+        <div className="mt-6">
+          <LatestIssues />
+        </div>
       </Suspense>
     </div>
   );
