@@ -49,8 +49,7 @@ export async function DELETE(
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({}, { status: 401 });
 
-  await delay(2000);
-  const issue = await prisma.issue.findUnique({
+   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) }, // استخدام params بعد await
   });
   if (!issue)

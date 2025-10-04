@@ -3,6 +3,7 @@ import { Table } from "@radix-ui/themes";
 
 const TableSkeleton = () => {
   return (
+    <div className="container">
     <Table.Root className="w-full border border-[#e3dfe6] rounded-md mt-4 animate-pulse">
       <Table.Header>
         <Table.Row>
@@ -33,6 +34,7 @@ const TableSkeleton = () => {
         ))}
       </Table.Body>
     </Table.Root>
+    </div>
   );
 };
 

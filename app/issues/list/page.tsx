@@ -43,8 +43,6 @@ const IssuesPage = async ({ searchParams }: Props) => {
 
   const issueNumber = await prisma.issue.count({ where: { status } });
 
-  console.log("Page:", page, "Issues:", issues.length);
-
   return (
     <>
       <div className="container mx-auto">
@@ -57,10 +55,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
             New Isuue
           </Link>
         </div>
-
-        <Suspense fallback={<TableSkeleton />}>
+        {/* <Suspense fallback={<TableSkeleton />}>
           <IssueTable searchParams={resolvedSearchParams} issues={issues} />
-        </Suspense>
+        </Suspense> */}
+        <IssueTable searchParams={resolvedSearchParams} issues={issues} />
         <Pagination
           pageSize={pageSize}
           currentPage={page}

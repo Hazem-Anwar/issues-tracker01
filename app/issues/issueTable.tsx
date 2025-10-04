@@ -6,7 +6,7 @@ import Link from "../components/Link";
 import delay from "delay";
 const IssueTable = async () => {
   const issues = await prisma.issue.findMany();
-  await delay(1000);
+  // await delay(1000);
 
   return (
     <Table.Root className="border border-[#e3dfe6] rounded-md my-5">
